@@ -69,7 +69,7 @@ if (
 		 *
 		 * @return string
 		 */
-		const POST_TYPE_KEY = 'tribe_ext_instructor';
+		const POST_TYPE_KEY = 'speakers';
 
 		/**
 		 * Our post type's rewrite slug and singular_name_lowercase.
@@ -78,7 +78,7 @@ if (
 		 *
 		 * @return string
 		 */
-		const POST_TYPE_SLUG = 'instructor';
+		const POST_TYPE_SLUG = 'speakers';
 
 		/**
 		 * Is Filterbar active. If yes, we'll add some extra functionality.
@@ -118,7 +118,7 @@ if (
 			// Load plugin textdomain
 			load_plugin_textdomain( 'tribe-ext-instructor-linked-post-type', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
-			add_action( 'init', array( $this, 'register_our_post_type' ) );
+			// add_action( 'init', array( $this, 'register_our_post_type' ) );
 			add_action( 'init', array( $this, 'link_post_type_to_events' ) );
 			add_action( 'wp_loaded', array( $this, 'set_our_capabilities' ) );
 			add_filter( 'tribe_events_linked_post_type_args', array( $this, 'filter_linked_post_type_args' ), 10, 2 );
