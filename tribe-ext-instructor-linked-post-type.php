@@ -918,7 +918,7 @@ if (
 		public function get_event_single_custom_fields_output( $post_id = 0 ) {
 			$post_id = absint( $post_id );
 
-			$output = 'Speakers';
+			$output = 'speakers';
 
 			if ( empty( $post_id ) ) {
 				return $output;
@@ -931,7 +931,7 @@ if (
 
 				if (
 					false === $value
-					|| 'Speakers' === $value
+					|| 'speakers' === $value
 				) {
 					continue;
 				}
