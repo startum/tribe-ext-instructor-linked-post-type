@@ -1,21 +1,21 @@
 <?php
 /**
- * Plugin Name:       The Events Calendar Extension: speakers Linked Post Type
+ * Plugin Name:       The Events Calendar Extension: Instructor Linked Post Type
  * Plugin URI:        https://theeventscalendar.com/knowledgebase/linked-post-types/
- * Description:       A boilerplate/starter extension for you to use as-is or fork. Used as-is, an "speakers" custom post type will be created and linked to The Events Calendar's Events, like Organizers are, and basic output will be added to the Single Event Page. See this plugin file's code comments for forking instructions.
+ * Description:       A boilerplate/starter extension for you to use as-is or fork. Used as-is, an "Instructor" custom post type will be created and linked to The Events Calendar's Events, like Organizers are, and basic output will be added to the Single Event Page. See this plugin file's code comments for forking instructions.
  * Version:           1.0.2
- * Extension Class:   Tribe__Extension__speakers_Linked_Post_Type
+ * Extension Class:   Tribe__Extension__Instructor_Linked_Post_Type
  * Author:            Modern Tribe, Inc.
  * Author URI:        http://m.tri.be/1971
  * License:           GPL version 3 or any later version
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:       tribe-ext-speakers-linked-post-type
+ * Text Domain:       tribe-ext-instructor-linked-post-type
  */
 
 /**
  * TODO: How to Fork this...
  * !!! Remove this plugin file's "GitHub Plugin URI" header item or else all your changes will be wiped out upon auto-update!!! We have this on auto-update for users who use the extension as-is instead of forking it.
- * Find and replace (case-sensitive) all mentions of "speakers" and "speakerss" (both lowercase and uppercase), including the following:
+ * Find and replace (case-sensitive) all mentions of "instructor" and "instructors" (both lowercase and uppercase), including the following:
  *** The name of this plugin directory (but do not remove the leading "tribe-ext-" part!)
  *** The name of this directory's sub-folder: src/views/RENAME_THIS/single.php -- and the content of this single.php
  *** This file's class name
@@ -24,21 +24,21 @@
  * And add your own custom fields -- see $this->get_custom_field_labels()
  * Check all other "TODO" notes throughout this file
  * Possibly change this plugin's header to offer a more helpful description within the Plugins List wp-admin screen.
- * Test everything is working as desired, including saving of meta data and customizing how it outputs to the Single Events Page and your single speakers page.
+ * Test everything is working as desired, including saving of meta data and customizing how it outputs to the Single Events Page and your single instructor page.
  */
 
-if ( ! function_exists( 'tribe_ext_is_event_speakers' ) ) {
+if ( ! function_exists( 'tribe_ext_is_event_instructor' ) ) {
 	/**
-	 * Conditional tag to check if the current page is a single speakers page.
+	 * Conditional tag to check if the current page is a single instructor page.
 	 *
 	 * @return bool
 	 **/
-	function tribe_ext_is_event_speakers() {
+	function tribe_ext_is_event_instructor() {
 		global $wp_query;
 
-		$tribe_ext_is_event_speakers = ! empty( $wp_query->tribe_ext_is_event_speakers );
+		$tribe_ext_is_event_instructor = ! empty( $wp_query->tribe_ext_is_event_instructor );
 
-		return apply_filters( 'tribe_ext_query_is_event_speakers', $tribe_ext_is_event_speakers );
+		return apply_filters( 'tribe_ext_query_is_event_instructor', $tribe_ext_is_event_instructor );
 	}
 }
 
@@ -51,12 +51,12 @@ if ( ! function_exists( 'tribe_ext_is_event_speakers' ) ) {
  */
 if (
 	class_exists( 'Tribe__Extension' )
-	&& ! class_exists( 'Tribe__Extension__speakers_Linked_Post_Type' )
+	&& ! class_exists( 'Tribe__Extension__Instructor_Linked_Post_Type' )
 ) {
 	/**
 	 * Extension main class, class begins loading on init() function.
 	 */
-	class Tribe__Extension__speakers_Linked_Post_Type extends Tribe__Extension {
+	class Tribe__Extension__Instructor_Linked_Post_Type extends Tribe__Extension {
 
 		/**
 		 * Our post type's key.
@@ -115,7 +115,7 @@ if (
 		 */
 		public function init() {
 			// Load plugin textdomain
-			load_plugin_textdomain( 'tribe-ext-speakers-linked-post-type', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+			load_plugin_textdomain( 'tribe-ext-instructor-linked-post-type', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 			// add_action( 'init', array( $this, 'register_our_post_type' ) );
 			add_action( 'init', array( $this, 'link_post_type_to_events' ) );
@@ -139,7 +139,7 @@ if (
 
 			add_filter( 'tribe_events_linked_post_type_meta_key', array( $this, 'filter_linked_post_type_meta_key' ), 10, 2 );
 
-			// Single speakers page: Handling the No Events Found situation.
+			// Single Instructor page: Handling the No Events Found situation.
 			// We followed how the Tribe__Events__Template_Factory class does it.
 			// cleanup after view (reset query, etc)
 			add_action( 'tribe_events_after_view', array( $this, 'shutdown_view' ) );
@@ -182,8 +182,8 @@ if (
 		 * Check required plugins after all Tribe plugins have loaded.
 		 */
 		public function add_filter_to_filterbar() {
-			if ( class_exists( 'Tribe__Events__Filterbar__Filters__speakers' ) ) {
-				new Tribe__Events__Filterbar__Filters__speakers( $this->get_post_type_label(), self::POST_TYPE_SLUG );
+			if ( class_exists( 'Tribe__Events__Filterbar__Filters__Instructor' ) ) {
+				new Tribe__Events__Filterbar__Filters__Instructor( $this->get_post_type_label(), self::POST_TYPE_SLUG );
 			}
 		}
 
@@ -269,15 +269,15 @@ if (
 		 * Enter "Phone" or "Email Address" -- however you want it to look to the
 		 * user, and the actual custom field key will be created from it.
 		 *
-		 * @see Tribe__Extension__speakers_Linked_Post_Type::sanitize_a_custom_fields_value()
+		 * @see Tribe__Extension__Instructor_Linked_Post_Type::sanitize_a_custom_fields_value()
 		 *
 		 * @return array
 		 */
 		protected function get_custom_field_labels() {
 			$field_labels = array(
-				esc_html_x( 'Phone', 'field label', 'tribe-ext-speakers-linked-post-type' ),
-				esc_html_x( 'Website', 'field label', 'tribe-ext-speakers-linked-post-type' ),
-				esc_html_x( 'Email Address', 'field label', 'tribe-ext-speakers-linked-post-type' ),
+				esc_html_x( 'Phone', 'field label', 'tribe-ext-instructor-linked-post-type' ),
+				esc_html_x( 'Website', 'field label', 'tribe-ext-instructor-linked-post-type' ),
+				esc_html_x( 'Email Address', 'field label', 'tribe-ext-instructor-linked-post-type' ),
 			);
 
 			$field_labels = array_map( 'esc_html', $field_labels );
@@ -364,7 +364,7 @@ if (
 		 * key, and then prepended with an underscore so it's "hidden" from default
 		 * wp-admin Custom Fields editing.
 		 *
-		 * @see Tribe__Extension__speakers_Linked_Post_Type::get_custom_field_labels()
+		 * @see Tribe__Extension__Instructor_Linked_Post_Type::get_custom_field_labels()
 		 * @see sanitize_key()
 		 *
 		 * @return array
@@ -404,30 +404,30 @@ if (
 		 */
 		public function register_our_post_type() {
 			$labels = array(
-				'name'                    => esc_html_x( 'speakerss', 'Post type general name', 'tribe-ext-speakers-linked-post-type' ),
-				'singular_name'           => esc_html_x( 'speakers', 'Post type singular name', 'tribe-ext-speakers-linked-post-type' ),
-				'singular_name_lowercase' => esc_html_x( self::POST_TYPE_SLUG, 'Post type singular name', 'tribe-ext-speakers-linked-post-type' ),
+				'name'                    => esc_html_x( 'Instructors', 'Post type general name', 'tribe-ext-instructor-linked-post-type' ),
+				'singular_name'           => esc_html_x( 'Instructor', 'Post type singular name', 'tribe-ext-instructor-linked-post-type' ),
+				'singular_name_lowercase' => esc_html_x( self::POST_TYPE_SLUG, 'Post type singular name', 'tribe-ext-instructor-linked-post-type' ),
 				// not part of WP's labels but is required by Linked_Posts::register_linked_post_type()
-				'add_new'                 => esc_html_x( 'Add New', self::POST_TYPE_KEY, 'tribe-ext-speakers-linked-post-type' ),
-				'add_new_item'            => esc_html__( 'Add New speakers', 'tribe-ext-speakers-linked-post-type' ),
-				'edit_item'               => esc_html__( 'Edit speakers', 'tribe-ext-speakers-linked-post-type' ),
-				'new_item'                => esc_html__( 'New speakers', 'tribe-ext-speakers-linked-post-type' ),
-				'view_item'               => esc_html__( 'View speakers', 'tribe-ext-speakers-linked-post-type' ),
-				'view_items'              => esc_html__( 'View speakerss', 'tribe-ext-speakers-linked-post-type' ),
-				'search_items'            => esc_html__( 'Search speakerss', 'tribe-ext-speakers-linked-post-type' ),
-				'not_found'               => esc_html__( 'No speakerss found', 'tribe-ext-speakers-linked-post-type' ),
-				'not_found_in_trash'      => esc_html__( 'No speakerss found in Trash', 'tribe-ext-speakers-linked-post-type' ),
-				'all_items'               => esc_html__( 'speakerss', 'tribe-ext-speakers-linked-post-type' ),
-				'archives'                => esc_html__( 'speakers Archives', 'tribe-ext-speakers-linked-post-type' ),
-				'insert_into_item'        => esc_html__( 'Insert into speakers', 'tribe-ext-speakers-linked-post-type' ),
-				'uploaded_to_this_item'   => esc_html__( 'Uploaded to this speakers', 'tribe-ext-speakers-linked-post-type' ),
-				'items_list'              => esc_html__( 'speakerss list', 'tribe-ext-speakers-linked-post-type' ),
-				'items_list_navigation'   => esc_html__( 'speakerss list navigation', 'tribe-ext-speakers-linked-post-type' ),
+				'add_new'                 => esc_html_x( 'Add New', self::POST_TYPE_KEY, 'tribe-ext-instructor-linked-post-type' ),
+				'add_new_item'            => esc_html__( 'Add New Instructor', 'tribe-ext-instructor-linked-post-type' ),
+				'edit_item'               => esc_html__( 'Edit Instructor', 'tribe-ext-instructor-linked-post-type' ),
+				'new_item'                => esc_html__( 'New Instructor', 'tribe-ext-instructor-linked-post-type' ),
+				'view_item'               => esc_html__( 'View Instructor', 'tribe-ext-instructor-linked-post-type' ),
+				'view_items'              => esc_html__( 'View Instructors', 'tribe-ext-instructor-linked-post-type' ),
+				'search_items'            => esc_html__( 'Search Instructors', 'tribe-ext-instructor-linked-post-type' ),
+				'not_found'               => esc_html__( 'No instructors found', 'tribe-ext-instructor-linked-post-type' ),
+				'not_found_in_trash'      => esc_html__( 'No instructors found in Trash', 'tribe-ext-instructor-linked-post-type' ),
+				'all_items'               => esc_html__( 'Instructors', 'tribe-ext-instructor-linked-post-type' ),
+				'archives'                => esc_html__( 'Instructor Archives', 'tribe-ext-instructor-linked-post-type' ),
+				'insert_into_item'        => esc_html__( 'Insert into instructor', 'tribe-ext-instructor-linked-post-type' ),
+				'uploaded_to_this_item'   => esc_html__( 'Uploaded to this instructor', 'tribe-ext-instructor-linked-post-type' ),
+				'items_list'              => esc_html__( 'Instructors list', 'tribe-ext-instructor-linked-post-type' ),
+				'items_list_navigation'   => esc_html__( 'Instructors list navigation', 'tribe-ext-instructor-linked-post-type' ),
 			);
 
 			$args = array(
 				'labels'              => $labels,
-				'description'         => esc_html__( 'speakerss linked to Events', 'tribe-ext-speakers-linked-post-type' ),
+				'description'         => esc_html__( 'Instructors linked to Events', 'tribe-ext-instructor-linked-post-type' ),
 				'public'              => true,
 				'exclude_from_search' => true,
 				'show_in_menu'        => 'edit.php?post_type=' . Tribe__Events__Main::POSTTYPE,
@@ -504,7 +504,7 @@ if (
 		 * @return string
 		 */
 		public function get_post_id_field_name() {
-			return $this->get_post_type_label( 'singular_name' ) . '_ID'; // speakers_ID
+			return $this->get_post_type_label( 'singular_name' ) . '_ID'; // Instructor_ID
 		}
 
 		/**
@@ -521,9 +521,9 @@ if (
 		 * @return string
 		 */
 		private function get_order_meta_key() {
-			$key = '_' . $this->get_post_id_field_name() . '_Order'; // _speakers_ID_Order
+			$key = '_' . $this->get_post_id_field_name() . '_Order'; // _Instructor_ID_Order
 
-			return sanitize_key( $key ); // _speakers_id_order
+			return sanitize_key( $key ); // _instructor_id_order
 		}
 
 		/**
@@ -605,7 +605,7 @@ if (
 
 			add_meta_box(
 				$meta_box_id,
-				sprintf( esc_html__( '%s Information', 'tribe-ext-speakers-linked-post-type' ), $this->get_post_type_label( 'singular_name' ) ),
+				sprintf( esc_html__( '%s Information', 'tribe-ext-instructor-linked-post-type' ), $this->get_post_type_label( 'singular_name' ) ),
 				array( $this, 'meta_box' ),
 				self::POST_TYPE_KEY,
 				'normal',
@@ -689,7 +689,7 @@ if (
 				self::POST_TYPE_KEY,
 				esc_attr( $custom_field_label ),
 				$custom_field_key,
-				esc_html__( $custom_field_label . ':', 'tribe-ext-speakers-linked-post-type' ),
+				esc_html__( $custom_field_label . ':', 'tribe-ext-instructor-linked-post-type' ),
 				$name,
 				esc_html( $value )
 			);
@@ -748,7 +748,7 @@ if (
 		}
 
 		/**
-		 * Saves the speakers information passed via an event.
+		 * Saves the instructor information passed via an event.
 		 *
 		 * @param string $id               Post type ID index.
 		 * @param array  $data             Data for submission.
@@ -788,9 +788,9 @@ if (
 		}
 
 		/**
-		 * Creates a new speakers
+		 * Creates a new Instructor
 		 *
-		 * @param array  $data        The speakers data.
+		 * @param array  $data        The Instructor data.
 		 * @param string $post_status the Intended post status.
 		 *
 		 * @see Tribe__Events__Organizer::create() Inspiration for additional functionality, such as implementing Avoid Duplicates.
@@ -806,7 +806,7 @@ if (
 				)
 				|| $this->has_this_post_types_custom_fields( $data )
 			) {
-				$title   = isset( $data[$name_field_index] ) ? $data[$name_field_index] : sprintf( esc_html__( 'Unnamed %s', 'tribe-ext-speakers-linked-post-type' ), $this->get_post_type_label( 'singular_name' ) );
+				$title   = isset( $data[$name_field_index] ) ? $data[$name_field_index] : sprintf( esc_html__( 'Unnamed %s', 'tribe-ext-instructor-linked-post-type' ), $this->get_post_type_label( 'singular_name' ) );
 				$content = isset( $data['Description'] ) ? $data['Description'] : '';
 				$slug    = sanitize_title( $title );
 
@@ -827,12 +827,12 @@ if (
 					'post_date_gmt' => $data['post_date_gmt'],
 				);
 
-				$speakers_id = wp_insert_post( array_filter( $postdata ), true );
+				$instructor_id = wp_insert_post( array_filter( $postdata ), true );
 
-				if ( ! is_wp_error( $speakers_id ) ) {
-					$this->save_meta( $speakers_id, $data );
+				if ( ! is_wp_error( $instructor_id ) ) {
+					$this->save_meta( $instructor_id, $data );
 
-					return $speakers_id;
+					return $instructor_id;
 				}
 			}
 
@@ -840,20 +840,20 @@ if (
 		}
 
 		/**
-		 * Updates an speakers.
+		 * Updates an instructor.
 		 *
 		 * This method is different from Tribe__Events__Organizer::update(). We
 		 * removed things we didn't need for this context, since we only really
 		 * pass the custom fields to this and let WordPress core do it's thing
 		 * with the title, post_content, etc.
 		 *
-		 * @see Tribe__Extension__speakers_Linked_Post_Type::event_edit_form_save_data()
-		 * @see Tribe__Extension__speakers_Linked_Post_Type::save_data_from_meta_box()
+		 * @see Tribe__Extension__Instructor_Linked_Post_Type::event_edit_form_save_data()
+		 * @see Tribe__Extension__Instructor_Linked_Post_Type::save_data_from_meta_box()
 		 *
-		 * @param int   $id   The speakers ID to update.
-		 * @param array $data The speakers data.
+		 * @param int   $id   The instructor ID to update.
+		 * @param array $data The instructor data.
 		 *
-		 * @return int The updated speakers post ID
+		 * @return int The updated instructor post ID
 		 */
 		protected function update_existing( $id, $data ) {
 			$data = new Tribe__Data( $data, '' );
@@ -1066,14 +1066,14 @@ if (
 				! is_admin()
 				&& self::POST_TYPE_KEY === $query->get( 'post_type' )
 			) {
-				$query->tribe_ext_is_event_speakers = true;
+				$query->tribe_ext_is_event_instructor = true;
 
 				// Override Previous and Next navigation links
 				// Commented the following two filters out because the Past Events and Next Events displays do not work (they don't work for Organizers or Venues either) so we just force not displaying the links at all (the next two filters below).
 				// add_filter( 'tribe_get_listview_prev_link', array( $this, 'override_previous_link' ) );
 				// add_filter( 'tribe_get_listview_next_link', array( $this, 'override_next_link' ) );
 
-				// Single speakers Page: Force Previous and Next navigation links to not appear.
+				// Single Instructor Page: Force Previous and Next navigation links to not appear.
 				add_filter( 'tribe_has_previous_event', '__return_false' );
 				add_filter( 'tribe_has_next_event', '__return_false' );
 			}
@@ -1094,7 +1094,7 @@ if (
 			global $wp_query;
 
 			// Cannot use is_singular() within pre_get_posts because the queried object is not yet set
-			if ( ! empty( $wp_query->tribe_ext_is_event_speakers ) ) {
+			if ( ! empty( $wp_query->tribe_ext_is_event_instructor ) ) {
 				return true;
 			} else {
 				return (bool) $tribe_is_event_query;
@@ -1162,7 +1162,7 @@ if (
 		}
 
 		/**
-		 * Override the Previous Events link on the Single speakers page.
+		 * Override the Previous Events link on the Single Instructor page.
 		 *
 		 * @param $link
 		 *
@@ -1194,7 +1194,7 @@ if (
 		}
 
 		/**
-		 * Override the Next Events link on the Single speakers page.
+		 * Override the Next Events link on the Single Instructor page.
 		 *
 		 * @param $link
 		 *
@@ -1229,7 +1229,7 @@ if (
 		 * Sets an appropriate no results found message.
 		 */
 		protected function nothing_found_notice() {
-			Tribe__Notices::set_notice( 'event-search-no-results', esc_html__( 'There were no results found.', 'tribe-ext-speakers-linked-post-type' ) );
+			Tribe__Notices::set_notice( 'event-search-no-results', esc_html__( 'There were no results found.', 'tribe-ext-instructor-linked-post-type' ) );
 		}
 
 		/**
