@@ -69,7 +69,7 @@ if (
 		 *
 		 * @return string
 		 */
-		const POST_TYPE_KEY = 'speakers';
+		const POST_TYPE_KEY = 'speaker';
 
 		/**
 		 * Our post type's rewrite slug and singular_name_lowercase.
@@ -78,7 +78,7 @@ if (
 		 *
 		 * @return string
 		 */
-		const POST_TYPE_SLUG = 'speakers';
+		const POST_TYPE_SLUG = 'speaker';
 
 		/**
 		 * Is Filterbar active. If yes, we'll add some extra functionality.
