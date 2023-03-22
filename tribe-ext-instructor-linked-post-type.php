@@ -405,25 +405,25 @@ if (
 		 */
 		public function register_our_post_type() {
 			$labels = array(
-				'name'                    => esc_html_x( 'Instructors', 'Post type general name', 'tribe-ext-instructor-linked-post-type' ),
-				'singular_name'           => esc_html_x( 'Instructor', 'Post type singular name', 'tribe-ext-instructor-linked-post-type' ),
+				'name'                    => esc_html_x( 'Speakers', 'Post type general name', 'tribe-ext-instructor-linked-post-type' ),
+				'singular_name'           => esc_html_x( 'Speaker', 'Post type singular name', 'tribe-ext-instructor-linked-post-type' ),
 				'singular_name_lowercase' => esc_html_x( self::POST_TYPE_SLUG, 'Post type singular name', 'tribe-ext-instructor-linked-post-type' ),
 				// not part of WP's labels but is required by Linked_Posts::register_linked_post_type()
 				'add_new'                 => esc_html_x( 'Add New', self::POST_TYPE_KEY, 'tribe-ext-instructor-linked-post-type' ),
-				'add_new_item'            => esc_html__( 'Add New Instructor', 'tribe-ext-instructor-linked-post-type' ),
-				'edit_item'               => esc_html__( 'Edit Instructor', 'tribe-ext-instructor-linked-post-type' ),
-				'new_item'                => esc_html__( 'New Instructor', 'tribe-ext-instructor-linked-post-type' ),
-				'view_item'               => esc_html__( 'View Instructor', 'tribe-ext-instructor-linked-post-type' ),
-				'view_items'              => esc_html__( 'View Instructors', 'tribe-ext-instructor-linked-post-type' ),
-				'search_items'            => esc_html__( 'Search Instructors', 'tribe-ext-instructor-linked-post-type' ),
-				'not_found'               => esc_html__( 'No instructors found', 'tribe-ext-instructor-linked-post-type' ),
-				'not_found_in_trash'      => esc_html__( 'No instructors found in Trash', 'tribe-ext-instructor-linked-post-type' ),
-				'all_items'               => esc_html__( 'Instructors', 'tribe-ext-instructor-linked-post-type' ),
-				'archives'                => esc_html__( 'Instructor Archives', 'tribe-ext-instructor-linked-post-type' ),
-				'insert_into_item'        => esc_html__( 'Insert into instructor', 'tribe-ext-instructor-linked-post-type' ),
-				'uploaded_to_this_item'   => esc_html__( 'Uploaded to this instructor', 'tribe-ext-instructor-linked-post-type' ),
-				'items_list'              => esc_html__( 'Instructors list', 'tribe-ext-instructor-linked-post-type' ),
-				'items_list_navigation'   => esc_html__( 'Instructors list navigation', 'tribe-ext-instructor-linked-post-type' ),
+				'add_new_item'            => esc_html__( 'Add New Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'edit_item'               => esc_html__( 'Edit Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'new_item'                => esc_html__( 'New Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'view_item'               => esc_html__( 'View Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'view_items'              => esc_html__( 'View Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'search_items'            => esc_html__( 'Search Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'not_found'               => esc_html__( 'No Speaker found', 'tribe-ext-instructor-linked-post-type' ),
+				'not_found_in_trash'      => esc_html__( 'No Speaker found in Trash', 'tribe-ext-instructor-linked-post-type' ),
+				'all_items'               => esc_html__( 'Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'archives'                => esc_html__( 'Speaker Archives', 'tribe-ext-instructor-linked-post-type' ),
+				'insert_into_item'        => esc_html__( 'Insert into Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'uploaded_to_this_item'   => esc_html__( 'Uploaded to this Speaker', 'tribe-ext-instructor-linked-post-type' ),
+				'items_list'              => esc_html__( 'Speaker list', 'tribe-ext-instructor-linked-post-type' ),
+				'items_list_navigation'   => esc_html__( 'Speaker list navigation', 'tribe-ext-instructor-linked-post-type' ),
 			);
 
 			$args = array(
